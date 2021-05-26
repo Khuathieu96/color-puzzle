@@ -16,6 +16,7 @@ import LeaderBoard from "../containers/dashboard/LeaderBoard";
 import { useTheme } from "../context/ThemeContext/ThemeContext";
 import { useCreateStyle } from "../context/ThemeContext/useCreateStyle";
 import { AntDesign, Ionicons, Entypo } from "react-native-vector-icons";
+import DialogSetting from "../containers/dashboard/DialogSetting";
 
 const sliderWidth = Dimensions.get("screen").width;
 const _renderItem = ({ item, index }) => {
@@ -23,7 +24,7 @@ const _renderItem = ({ item, index }) => {
   return <Component />;
 };
 
-const data = [
+const dataModeGame = [
   {
     title: "Basic Mode",
     text: "Relaxing and elegant. No pressure.",
@@ -52,8 +53,9 @@ const DashboardScreen = ({ navigation }) => {
 
   const styles = useCreateStyle(getStyles);
   const [activeMode, setActiveMode] = useState(0);
+  const [openSetting, setOpenSetting] = useState(false);
 
-  const activeTab = data[activeMode];
+  const activeTab = dataModeGame[activeMode];
   return (
     <View style={styles.root}>
       <View style={styles.header}>
@@ -61,12 +63,12 @@ const DashboardScreen = ({ navigation }) => {
           <AntDesign name="hearto" size={30} /> {"  "}1
         </Text>
         <Text style={styles.name}>COLOR PUZZLE</Text>
-        <Text style={styles.more}>
+        <Text style={styles.more} onPress={() => setOpenSetting(true)}>
           <Ionicons name="ellipsis-vertical" size={30} />
         </Text>
       </View>
       <View style={{ flexDirection: "row" }}>
-        <Text>_____________________</Text>
+        <Text style={styles.line}>_____________________</Text>
 
         <View style={styles.dots}>
           <Entypo
@@ -106,13 +108,17 @@ const DashboardScreen = ({ navigation }) => {
             }
           />
         </View>
-        <Text>_____________________</Text>
+        <Text style={styles.line}>_____________________</Text>
       </View>
       <View style={styles.tab__carousel}>
         <AntDesign
           name="left"
           size={30}
-          color={state.color.text.gray}
+          color={
+            activeMode !== 0
+              ? state.color.text.gray
+              : state.color.background.yellow
+          }
           onPress={() => {
             carouselRef.current.snapToPrev();
             // console.log(
@@ -121,6 +127,7 @@ const DashboardScreen = ({ navigation }) => {
             // );
           }}
         />
+
         <View style={styles.text__tab__carousel}>
           <Text style={styles.game__name}>{activeTab.title}</Text>
           <Text style={styles.game__name__descript}>{activeTab.text}</Text>
@@ -128,7 +135,11 @@ const DashboardScreen = ({ navigation }) => {
         <AntDesign
           name="right"
           size={30}
-          color={state.color.text.gray}
+          color={
+            activeMode !== dataModeGame.length - 1
+              ? state.color.text.gray
+              : state.color.background.yellow
+          }
           onPress={() => {
             carouselRef.current.snapToNext();
           }}
@@ -136,13 +147,19 @@ const DashboardScreen = ({ navigation }) => {
       </View>
       <Carousel
         ref={carouselRef}
-        data={data}
+        data={dataModeGame}
         renderItem={_renderItem}
         sliderWidth={sliderWidth}
         itemWidth={sliderWidth}
         // onBeforeSnapToItem={a => console.log("onBeforeSnapToItem", a)}
         onSnapToItem={a => setActiveMode(a)}
       />
+      {openSetting && (
+        <DialogSetting
+          open={openSetting}
+          onClose={() => setOpenSetting(false)}
+        />
+      )}
     </View>
   );
 };
@@ -153,8 +170,9 @@ const getStyles = theme => {
       flex: 2,
       alignItems: "center",
       justifyContent: "center",
-      backgroundColor: "whitesmoke"
+      backgroundColor: theme.color.background.yellow
     },
+    line: { color: theme.color.line.grayYellow },
     dots: {
       flexDirection: "row"
     },
@@ -203,7 +221,8 @@ const getStyles = theme => {
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between",
-      padding: 12
+      padding: 12,
+      paddingTop: 24
     }
   });
 };

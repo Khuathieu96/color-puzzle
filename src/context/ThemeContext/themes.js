@@ -5,6 +5,7 @@ const themes = {
         blue: "#517EA1",
         gray: "#6F6670",
         red: "#D65D6E",
+        blueLight: "#C3D0DC",
         white: "#DDDDDD"
       },
       background: {
@@ -16,6 +17,7 @@ const themes = {
         white: "#FFFFFF",
         whiteGray: "#F0F0F0",
         blueMiddle: "#B4C6D5",
+        blueBold: "#A6BBCD",
         black50: "#00000080",
         black70: "#000000b3",
         grayMiddle: "#B4B4B4",
@@ -41,7 +43,7 @@ const themes = {
       },
       header2Medium: {
         fontSize: 20,
-        fontWeight: "medium",
+        fontWeight: "400",
         fontFamily: "Roboto"
       },
       header1Bold: {

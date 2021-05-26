@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, ScrollView, Text, View } from "react-native";
 import DashboardScreen from "./src/navigations/DashboardScreen";
-import GameScreen from "./src/navigations/GameScreen";
+import BasicGameScreen from "./src/navigations/BasicGameScreen";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -15,9 +15,13 @@ export default function App() {
   return (
     <ThemeProvider>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false
+          }}
+        >
           <Stack.Screen name="Dashboard" component={DashboardScreen} />
-          <Stack.Screen name="Game" component={GameScreen} />
+          <Stack.Screen name="Game" component={BasicGameScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </ThemeProvider>
