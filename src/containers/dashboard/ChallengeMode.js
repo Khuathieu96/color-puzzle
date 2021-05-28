@@ -1,10 +1,21 @@
-import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import React from "react";
+import { View, Text, Button, StyleSheet, FlatList } from "react-native";
+import ChallengeGame from "../../components/ChallengeGame";
 
-const ChallengeMode = (props) => {
+const challengeData = [
+  { id: "1", title: "Challenge 1" },
+  { id: "2", title: "Challenge 2" },
+  { id: "3", title: "Challenge 3" }
+];
+
+const ChallengeMode = props => {
   return (
     <View style={styles.root}>
-      <Text>Challenge Mode</Text>
+      <FlatList
+        data={challengeData}
+        renderItem={({ item }) => <ChallengeGame {...item} />}
+        keyExtractor={item => item.id}
+      />
     </View>
   );
 };
@@ -12,9 +23,6 @@ export default ChallengeMode;
 
 const styles = StyleSheet.create({
   root: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'whitesmoke',
-  },
+    flex: 1
+  }
 });
